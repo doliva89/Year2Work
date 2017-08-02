@@ -1,27 +1,22 @@
 fileFormatVersion: 2
-guid: 993e996c5d8267d4b8ab94c93e5d528d
+guid: a2a0cbe8906410744afd1cf73742b767
 timeCreated: 1501639689
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Medium_house_store
-    100002: Medium_house_store 1
-    100004: //RootNode
-    100006: pCube21
-    100008: Small_house4
-    100010: transform58
-    100012: transform59
-    400000: Medium_house_store
-    400002: Medium_house_store 1
-    400004: //RootNode
-    400006: pCube21
-    400008: Small_house4
-    400010: transform58
-    400012: transform59
-    2300000: Medium_house_store
-    3300000: Medium_house_store
-    4300000: Medium_house_store
+    100000: //RootNode
+    100002: pCube47
+    100004: pCylinder19
+    400000: //RootNode
+    400002: pCube47
+    400004: pCylinder19
+    2300000: pCube47
+    2300002: pCylinder19
+    3300000: pCube47
+    3300002: pCylinder19
+    4300000: pCube47
+    4300002: pCylinder19
     9500000: //RootNode
   materials:
     importMaterials: 1

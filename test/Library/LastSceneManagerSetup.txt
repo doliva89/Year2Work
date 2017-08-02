@@ -1,4 +1,4 @@
 sceneSetups:
-- path: C:/Users/s171608/Desktop/New Unity Project 2/Assets/Scenes/1.unity
+- path: Assets/Scenes/map 1_AK.unity
   isLoaded: 1
   isActive: 1

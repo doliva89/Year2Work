@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour {
     private Vector3 mousePosition;
     private Vector3 direction;
     private float distanceFromObject;
-    public Camera camera;
+    //public Camera camera;
 
     void Start () {
         rb = GetComponent<Rigidbody>();
@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-      void  turning() {
+    void  turning() {
         float mouseInput = Input.GetAxis("Mouse X");
         Vector3 lookhere = new Vector3(0, mouseInput, 0);
         transform.Rotate(lookhere);

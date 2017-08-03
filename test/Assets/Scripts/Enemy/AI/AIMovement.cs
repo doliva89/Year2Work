@@ -2,19 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEditor.Animations;
 
 public class AIMovement : MonoBehaviour {
 
     private NavMeshAgent agent;
     private Vector3 startPosition;
+    private GameObject player;
+    private Animator animator;
+
+    
+
     public bool wandering = true;
     public bool chasing = false;
 
     public float wanderingSpeed = 0.5f;
+    public float wanderingAnimSpeed = 2.5f;
     public float wanderRange = 5.0f;
     public float chaseSpeed = 2.0f;
+    public float chaseAnimSpeed = 5.0f;
 
-    private GameObject player;
+    
 
     // Use this for initialization
     void Awake ()
@@ -23,6 +31,7 @@ public class AIMovement : MonoBehaviour {
         agent.speed = wanderingSpeed;
         startPosition = this.transform.position;
 
+        animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
 	}
 	
@@ -43,6 +52,7 @@ public class AIMovement : MonoBehaviour {
         Vector3 destination = startPosition + new Vector3(Random.Range(-wanderRange, wanderRange), 0, Random.Range(-wanderRange, wanderRange));
         NewDestination(destination);
         agent.speed = wanderingSpeed;
+        animator.SetBool("chasing", false);
     }
 
     public void NewDestination(Vector3 targetPoint)
@@ -52,9 +62,9 @@ public class AIMovement : MonoBehaviour {
 
     void ChasePlayer()
     {
-        //GetComponent<NavMeshAgent>().destination = player.transform.position;
         NewDestination(player.transform.position);
         agent.speed = chaseSpeed;
+        animator.SetBool("chasing", true);
     }
 
     void OnTriggerEnter(Collider player)

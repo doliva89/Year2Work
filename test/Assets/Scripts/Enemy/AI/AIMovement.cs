@@ -11,18 +11,26 @@ public class AIMovement : MonoBehaviour {
     private GameObject player;
     private Animator animator;
 
-    
 
-    public bool wandering = true;
-    public bool chasing = false;
-
+    //Values that can be changed for when the enemy is wandering around
     public float wanderingSpeed = 0.5f;
     public float wanderingAnimSpeed = 2.5f;
     public float wanderRange = 5.0f;
-    public float chaseSpeed = 2.0f;
-    public float chaseAnimSpeed = 5.0f;
 
-    
+    //Values that can be changed for the attacking side of enemy
+    public float chaseSpeed = 5.0f;
+    public float chaseAnimSpeed = 5.0f;
+    public float rollSpeed = 3.0f;
+
+    //Values of the players position and if the player is within certain ranges for different phases
+    public float playerDistance;
+    public float inRangeChase = 5.0f;
+    public float inRangeRoll = 2.5f;
+    public float outRangeWander = 10.0f;
+
+    //Wander repeating parameters
+    public float wanderRepeatTime = 1.0f;
+    public float wanderRepeatRate = 5.0f;
 
     // Use this for initialization
     void Awake ()
@@ -37,22 +45,41 @@ public class AIMovement : MonoBehaviour {
 	
     void Update()
     {
-        if (wandering != false && !IsInvoking("Wander"))
+        playerDistance = Vector3.Distance(transform.position, player.transform.position);
+
+        if (playerDistance >= outRangeWander && !IsInvoking("Wander") && !IsInvoking("RollAttack"))
         {
-            InvokeRepeating("Wander", 1f, 5f);
+            print("wandering");
+            animator.SetBool("chasing", false);
+            animator.SetBool("roll", false);
+            InvokeRepeating("Wander", wanderRepeatTime, wanderRepeatRate);
         }
-        if(chasing)
+        if(playerDistance <= inRangeChase && playerDistance >= inRangeRoll && !IsInvoking("RollAttack"))
         {
+            print("chasing range");
+
+            animator.SetBool("chasing", true);
+            animator.SetBool("roll", false);
             ChasePlayer();
+        }
+
+        if (playerDistance <= inRangeRoll && !IsInvoking("RollAttack"))
+        {
+            print("roll range");
+            agent.speed = rollSpeed;
+            animator.SetBool("roll", true);
+            animator.SetBool("chasing", false);
+            Invoke("RollAttack", 5.0f);
         }
     }
 
+
+    //Functions
     void Wander()
     {
         Vector3 destination = startPosition + new Vector3(Random.Range(-wanderRange, wanderRange), 0, Random.Range(-wanderRange, wanderRange));
         NewDestination(destination);
         agent.speed = wanderingSpeed;
-        animator.SetBool("chasing", false);
     }
 
     public void NewDestination(Vector3 targetPoint)
@@ -62,27 +89,41 @@ public class AIMovement : MonoBehaviour {
 
     void ChasePlayer()
     {
-        NewDestination(player.transform.position);
+        CancelInvoke();
         agent.speed = chaseSpeed;
-        animator.SetBool("chasing", true);
+        NewDestination(player.transform.position);
+        
     }
 
-    void OnTriggerEnter(Collider player)
+    void RollAttack()
     {
-        if(player.tag == "Player")
-        {
-            wandering = false;
-            chasing = true;
-            CancelInvoke();
-        }
+        
+        NewDestination(player.transform.position);
     }
 
-    void OnTriggerExit(Collider player)
-    {
-        if(player.tag == "Player")
-        {
-            wandering = true;
-            chasing = false;
-        }
-    }
+
+
+
+
+
+
+    //Collider used to tell the AI if its in range of the player and to switch states
+    //void OnTriggerEnter(Collider player)
+    //{
+    //    if(player.tag == "Player")
+    //    {
+    //        wandering = false;
+    //        chasing = true;
+    //        CancelInvoke();
+    //    }
+    //}
+
+    //void OnTriggerExit(Collider player)
+    //{
+    //    if(player.tag == "Player")
+    //    {
+    //        wandering = true;
+    //        chasing = false;
+    //    }
+    //}
 }

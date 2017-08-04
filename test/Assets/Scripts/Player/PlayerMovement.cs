@@ -9,29 +9,30 @@ public class PlayerMovement : MonoBehaviour {
     float player;
     public float walkSpeed;
     public float runSpeed;
+    public float jumpForce;
     // Use this for initialization
 
     private Vector3 mousePosition;
     private Vector3 direction;
     private float distanceFromObject;
+    private bool m_grounded;
+
+
     //public Camera camera;
 
     void Start () {
         rb = GetComponent<Rigidbody>();
-	}
+        m_grounded = true;
+
+    }
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        //Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.z, 10);
-        //Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePos);
-        //lookPos = lookPos - transform.position;
-        //float angle = Mathf.Atan2(lookPos.z, lookPos.x) * Mathf.Rad2Deg;
-        //transform.rotation = Quaternion.AngleAxis(angle, Vector3.right);
-
         walking(h, v);
         turning();
+        jump();
     }
 
     void walking(float x, float v) {
@@ -85,6 +86,13 @@ public class PlayerMovement : MonoBehaviour {
         float mouseInput = Input.GetAxis("Mouse X");
         Vector3 lookhere = new Vector3(0, mouseInput, 0);
         transform.Rotate(lookhere);
+    }
+
+    void jump() {
+        if (Input.GetButtonDown("Jump")) {
+            m_grounded = false;
+            rb.velocity = new Vector3(rb.velocity.x, 10, rb.velocity.z);
+        }
     }
 
 }

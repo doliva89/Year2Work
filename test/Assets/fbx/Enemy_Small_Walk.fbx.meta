@@ -77,7 +77,84 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 95
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Enemy_Small_Walk
+        weight: 1
+      - path: Root_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Chest_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Chest_jnt/Clavical_L_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Chest_jnt/Clavical_L_jnt/Shoulder_L_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Chest_jnt/Clavical_L_jnt/Shoulder_L_jnt/Elbow_L_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Chest_jnt/Clavical_L_jnt/Shoulder_L_jnt/Elbow_L_jnt/Fist_L_End
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Chest_jnt/Clavical_R_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Chest_jnt/Clavical_R_jnt/Shoulder_R_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Chest_jnt/Clavical_R_jnt/Shoulder_R_jnt/Elbow_R_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Chest_jnt/Clavical_R_jnt/Shoulder_R_jnt/Elbow_R_jnt/Fist_L_End
+          1
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Chest_jnt/Head_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Chest_jnt/Head_jnt/head_END
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Leg_L_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Leg_L_jnt/Knee_L_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Leg_L_jnt/Knee_L_jnt/Foot_L_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Leg_L_jnt/Knee_L_jnt/Foot_L_jnt/Toe_END
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Leg_R_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Leg_R_jnt/Knee_R_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Leg_R_jnt/Knee_R_jnt/Foot_R_jnt
+        weight: 1
+      - path: Root_jnt/COG_jnt/hip_jnt/Leg_R_jnt/Knee_R_jnt/Foot_R_jnt/Toe_END 1
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -101,7 +178,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
   importAnimation: 1
-  copyAvatar: 0
+  copyAvatar: 1
   humanDescription:
     serializedVersion: 2
     human: []
@@ -118,7 +195,8 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: cf6ad099552b91748b9ee9f84752b6a2,
+    type: 3}
   animationType: 2
   humanoidOversampling: 1
   additionalBone: 0

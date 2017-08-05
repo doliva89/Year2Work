@@ -10,11 +10,13 @@ public class PlayerMovement : MonoBehaviour {
     public float walkSpeed;
     public float runSpeed;
     public float jumpForce;
+    public float negativeJumpForce;
     // Use this for initialization
 
     private Vector3 mousePosition;
     private Vector3 direction;
     private float distanceFromObject;
+    private float movementSpeed;
     private bool m_grounded;
 
 
@@ -27,16 +29,23 @@ public class PlayerMovement : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        walking(h, v);
-        turning();
-        jump();
+        Movement(h, v);
+        Turning();
+        Jump();
+      
     }
 
-    void walking(float x, float v) {
+    void Movement(float x, float v) {
 
+       if( Input.GetKey(KeyCode.LeftShift)) {
+
+            movementSpeed = runSpeed;
+        }
+        else { movementSpeed = walkSpeed; }
+        print(movementSpeed);
         string direction = "none";
 
         if (v > 0.1) direction = "forward";
@@ -49,49 +58,60 @@ public class PlayerMovement : MonoBehaviour {
         if (v < -0.1 && x > 0.1) direction = "BackwardRight";
         switch (direction) {
             case "forward":
-                rb.MovePosition(transform.position + transform.forward * walkSpeed * Time.deltaTime);
+                rb.MovePosition(transform.position + transform.forward * movementSpeed * Time.deltaTime);
                 break;
 
             case "backward":
-                rb.MovePosition(transform.position - transform.forward * walkSpeed * Time.deltaTime);
+                rb.MovePosition(transform.position - transform.forward * movementSpeed * Time.deltaTime);
                 break;
 
             case "right":
-                rb.MovePosition(transform.position + transform.right * walkSpeed * Time.deltaTime);
+                rb.MovePosition(transform.position + transform.right * movementSpeed * Time.deltaTime);
                 break;
 
             case "left":
-                rb.MovePosition(transform.position - transform.right * walkSpeed * Time.deltaTime);
+                rb.MovePosition(transform.position - transform.right * movementSpeed * Time.deltaTime);
                 break;
 
             case "ForwardLeft":
-                rb.MovePosition(transform.position - (transform.right - transform.forward) * walkSpeed * Time.deltaTime);
+                rb.MovePosition(transform.position - (transform.right - transform.forward).normalized * movementSpeed * Time.deltaTime);
                 break;
 
             case "ForwardRight":
-                rb.MovePosition(transform.position + (transform.right + transform.forward) * walkSpeed * Time.deltaTime);
+                rb.MovePosition(transform.position + (transform.right + transform.forward).normalized * movementSpeed * Time.deltaTime);
                 break;
 
             case "BackwardLeft":
-                rb.MovePosition(transform.position - (transform.right + transform.forward) * walkSpeed * Time.deltaTime);
+                rb.MovePosition(transform.position - (transform.right + transform.forward).normalized * movementSpeed * Time.deltaTime);
                 break;
 
             case "BackwardRight":
-                rb.MovePosition(transform.position + (transform.right - transform.forward) * walkSpeed * Time.deltaTime);
+                rb.MovePosition(transform.position + (transform.right - transform.forward).normalized * movementSpeed * Time.deltaTime);
                 break;
         }
     }
 
-    void  turning() {
+    void  Turning() {
         float mouseInput = Input.GetAxis("Mouse X");
         Vector3 lookhere = new Vector3(0, mouseInput, 0);
         transform.Rotate(lookhere);
     }
 
-    void jump() {
-        if (Input.GetButtonDown("Jump")) {
+    void Jump() {
+        if (Input.GetButtonDown("Jump") && m_grounded == true) {
+
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
             m_grounded = false;
-            rb.velocity = new Vector3(rb.velocity.x, 10, rb.velocity.z);
+        }
+        if (m_grounded == false)
+            rb.AddForce(-Vector3.up * negativeJumpForce, ForceMode.Impulse);
+    }
+
+    
+
+    private void OnCollisionEnter(Collision collision) {
+        if(collision.gameObject.tag == "Map") {
+            m_grounded = true;
         }
     }
 

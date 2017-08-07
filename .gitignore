@@ -151,3 +151,5 @@ test/Assets/Enemy/Grunt/Grunt_Roll.fbx.meta
 test/Assets/Enemy/Grunt/Grunt.fbx.meta
 test/Assets/Enemy/Grunt.meta
 test/Assets/Enemy.meta
+test/Temp/
+test/Library/metadata/

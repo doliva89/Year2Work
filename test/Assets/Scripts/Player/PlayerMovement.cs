@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour {
             movementSpeed = runSpeed;
         }
         else { movementSpeed = walkSpeed; }
-        print(movementSpeed);
+       
         string direction = "none";
 
         if (v > 0.1) direction = "forward";

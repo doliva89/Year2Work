@@ -6,13 +6,16 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     Rigidbody rb;
-    float player;
+
     public float walkSpeed;
     public float runSpeed;
     public float jumpForce;
     public float negativeJumpForce;
-    // Use this for initialization
+    public float rollForce;
+    public int rolldistance;
+    
 
+    Vector3 directionOfRoll;
     private Vector3 mousePosition;
     private Vector3 direction;
     private float distanceFromObject;
@@ -35,7 +38,8 @@ public class PlayerMovement : MonoBehaviour {
         Movement(h, v);
         Turning();
         Jump();
-      
+        Dodge(h, v);
+
     }
 
     void Movement(float x, float v) {
@@ -59,36 +63,45 @@ public class PlayerMovement : MonoBehaviour {
         switch (direction) {
             case "forward":
                 rb.MovePosition(transform.position + transform.forward * movementSpeed * Time.deltaTime);
+                directionOfRoll = transform.forward;
                 break;
 
             case "backward":
                 rb.MovePosition(transform.position - transform.forward * movementSpeed * Time.deltaTime);
+                directionOfRoll = -transform.forward;
                 break;
 
             case "right":
                 rb.MovePosition(transform.position + transform.right * movementSpeed * Time.deltaTime);
+                directionOfRoll = transform.right;
                 break;
 
             case "left":
                 rb.MovePosition(transform.position - transform.right * movementSpeed * Time.deltaTime);
+                directionOfRoll = -transform.right;
                 break;
 
             case "ForwardLeft":
                 rb.MovePosition(transform.position - (transform.right - transform.forward).normalized * movementSpeed * Time.deltaTime);
+                directionOfRoll = -(transform.right - transform.forward).normalized;
                 break;
 
             case "ForwardRight":
                 rb.MovePosition(transform.position + (transform.right + transform.forward).normalized * movementSpeed * Time.deltaTime);
+                directionOfRoll = (transform.right + transform.forward).normalized;
                 break;
 
             case "BackwardLeft":
                 rb.MovePosition(transform.position - (transform.right + transform.forward).normalized * movementSpeed * Time.deltaTime);
+                directionOfRoll = -(transform.right + transform.forward).normalized;
                 break;
 
             case "BackwardRight":
                 rb.MovePosition(transform.position + (transform.right - transform.forward).normalized * movementSpeed * Time.deltaTime);
-                break;
+                directionOfRoll = (transform.right - transform.forward).normalized;
+                break; 
         }
+       
     }
 
     void  Turning() {
@@ -105,6 +118,15 @@ public class PlayerMovement : MonoBehaviour {
         }
         if (m_grounded == false)
             rb.AddForce(-Vector3.up * negativeJumpForce, ForceMode.Impulse);
+    }
+
+    void Dodge(float h, float v) {
+
+       
+        if (h !=0 && Input.GetKeyDown(KeyCode.E) || v != 0 && Input.GetKeyDown(KeyCode.E)){
+            print(Input.GetKeyDown(KeyCode.E));
+            rb.AddForce(directionOfRoll * rollForce, ForceMode.Impulse - rolldistance);
+        }
     }
 
     

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 7011b924ed852e34aa9c42941a7f8a23
-timeCreated: 1501821171
+guid: fff12e41c1bd20f45ba36ed32b25fe27
+timeCreated: 1502339161
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -12,7 +12,7 @@ ModelImporter:
     100008: BIND_Elbow_L_jnt
     100010: BIND_Elbow_R_jnt
     100012: BIND_Fist_L_End
-    100014: BIND_Fist_L_End 1
+    100014: BIND_Fist_R_End
     100016: BIND_Foot_L_jnt
     100018: BIND_Foot_R_jnt
     100020: BIND_head_END
@@ -25,8 +25,8 @@ ModelImporter:
     100034: BIND_Root_jnt
     100036: BIND_Shoulder_L_jnt
     100038: BIND_Shoulder_R_jnt
-    100040: BIND_Toe_END
-    100042: BIND_Toe_END 1
+    100040: BIND_Toe_L_END
+    100042: BIND_Toe_R_END
     100044: Geo
     100046: //RootNode
     400000: BIND_Chest_jnt
@@ -36,7 +36,7 @@ ModelImporter:
     400008: BIND_Elbow_L_jnt
     400010: BIND_Elbow_R_jnt
     400012: BIND_Fist_L_End
-    400014: BIND_Fist_L_End 1
+    400014: BIND_Fist_R_End
     400016: BIND_Foot_L_jnt
     400018: BIND_Foot_R_jnt
     400020: BIND_head_END
@@ -49,16 +49,13 @@ ModelImporter:
     400034: BIND_Root_jnt
     400036: BIND_Shoulder_L_jnt
     400038: BIND_Shoulder_R_jnt
-    400040: BIND_Toe_END
-    400042: BIND_Toe_END 1
+    400040: BIND_Toe_L_END
+    400042: BIND_Toe_R_END
     400044: Geo
     400046: //RootNode
     4300000: Geo
-    7400000: rollStart_Anim
-    7400002: roll_Anim
-    7400004: rollAttack_Anim
-    7400006: Dizzy_Anim
-    7400008: rollEnd_Anim
+    7400000: Hit_Anim
+    7400002: Death_Anim
     9500000: //RootNode
     13700000: Geo
   materials:
@@ -83,88 +80,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: rollStart_Anim
+      name: Hit_Anim
       takeName: Take 001
-      firstFrame: 1
-      lastFrame: 30
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: BIND_Root_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_L_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_L_jnt/BIND_Shoulder_L_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_L_jnt/BIND_Shoulder_L_jnt/BIND_Elbow_L_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_L_jnt/BIND_Shoulder_L_jnt/BIND_Elbow_L_jnt/BIND_Fist_L_End
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt/BIND_Shoulder_R_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt/BIND_Shoulder_R_jnt/BIND_Elbow_R_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt/BIND_Shoulder_R_jnt/BIND_Elbow_R_jnt/BIND_Fist_L_End
-          1
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Head_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Head_jnt/BIND_head_END
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt/BIND_Knee_L_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt/BIND_Knee_L_jnt/BIND_Foot_L_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt/BIND_Knee_L_jnt/BIND_Foot_L_jnt/BIND_Toe_END
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt/BIND_Knee_R_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt/BIND_Knee_R_jnt/BIND_Foot_R_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt/BIND_Knee_R_jnt/BIND_Foot_R_jnt/BIND_Toe_END
-          1
-        weight: 1
-      - path: Geo
-        weight: 1
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: roll_Anim
-      takeName: Take 001
-      firstFrame: 30
-      lastFrame: 56
+      firstFrame: 230
+      lastFrame: 250
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -209,8 +128,7 @@ ModelImporter:
         weight: 1
       - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt/BIND_Shoulder_R_jnt/BIND_Elbow_R_jnt
         weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt/BIND_Shoulder_R_jnt/BIND_Elbow_R_jnt/BIND_Fist_L_End
-          1
+      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt/BIND_Shoulder_R_jnt/BIND_Elbow_R_jnt/BIND_Fist_R_End
         weight: 1
       - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Head_jnt
         weight: 1
@@ -222,7 +140,7 @@ ModelImporter:
         weight: 1
       - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt/BIND_Knee_L_jnt/BIND_Foot_L_jnt
         weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt/BIND_Knee_L_jnt/BIND_Foot_L_jnt/BIND_Toe_END
+      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt/BIND_Knee_L_jnt/BIND_Foot_L_jnt/BIND_Toe_L_END
         weight: 1
       - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt
         weight: 1
@@ -230,8 +148,7 @@ ModelImporter:
         weight: 1
       - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt/BIND_Knee_R_jnt/BIND_Foot_R_jnt
         weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt/BIND_Knee_R_jnt/BIND_Foot_R_jnt/BIND_Toe_END
-          1
+      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt/BIND_Knee_R_jnt/BIND_Foot_R_jnt/BIND_Toe_R_END
         weight: 1
       - path: Geo
         weight: 1
@@ -239,10 +156,10 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: rollAttack_Anim
+      name: Death_Anim
       takeName: Take 001
-      firstFrame: 56
-      lastFrame: 130
+      firstFrame: 250
+      lastFrame: 300
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -287,8 +204,7 @@ ModelImporter:
         weight: 1
       - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt/BIND_Shoulder_R_jnt/BIND_Elbow_R_jnt
         weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt/BIND_Shoulder_R_jnt/BIND_Elbow_R_jnt/BIND_Fist_L_End
-          1
+      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt/BIND_Shoulder_R_jnt/BIND_Elbow_R_jnt/BIND_Fist_R_End
         weight: 1
       - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Head_jnt
         weight: 1
@@ -300,7 +216,7 @@ ModelImporter:
         weight: 1
       - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt/BIND_Knee_L_jnt/BIND_Foot_L_jnt
         weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt/BIND_Knee_L_jnt/BIND_Foot_L_jnt/BIND_Toe_END
+      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt/BIND_Knee_L_jnt/BIND_Foot_L_jnt/BIND_Toe_L_END
         weight: 1
       - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt
         weight: 1
@@ -308,86 +224,7 @@ ModelImporter:
         weight: 1
       - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt/BIND_Knee_R_jnt/BIND_Foot_R_jnt
         weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt/BIND_Knee_R_jnt/BIND_Foot_R_jnt/BIND_Toe_END
-          1
-        weight: 1
-      - path: Geo
-        weight: 1
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: rollEnd_Anim
-      takeName: Take 001
-      firstFrame: 56
-      lastFrame: 130
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: BIND_Root_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_L_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_L_jnt/BIND_Shoulder_L_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_L_jnt/BIND_Shoulder_L_jnt/BIND_Elbow_L_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_L_jnt/BIND_Shoulder_L_jnt/BIND_Elbow_L_jnt/BIND_Fist_L_End
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt/BIND_Shoulder_R_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt/BIND_Shoulder_R_jnt/BIND_Elbow_R_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Clavical_R_jnt/BIND_Shoulder_R_jnt/BIND_Elbow_R_jnt/BIND_Fist_L_End
-          1
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Head_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Chest_jnt/BIND_Head_jnt/BIND_head_END
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt/BIND_Knee_L_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt/BIND_Knee_L_jnt/BIND_Foot_L_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_L_jnt/BIND_Knee_L_jnt/BIND_Foot_L_jnt/BIND_Toe_END
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt/BIND_Knee_R_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt/BIND_Knee_R_jnt/BIND_Foot_R_jnt
-        weight: 1
-      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt/BIND_Knee_R_jnt/BIND_Foot_R_jnt/BIND_Toe_END
-          1
+      - path: BIND_Root_jnt/BIND_COG_jnt/BIND_hip_jnt/BIND_Leg_R_jnt/BIND_Knee_R_jnt/BIND_Foot_R_jnt/BIND_Toe_R_END
         weight: 1
       - path: Geo
         weight: 1
@@ -417,7 +254,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
   importAnimation: 1
-  copyAvatar: 1
+  copyAvatar: 0
   humanDescription:
     serializedVersion: 2
     human: []
@@ -434,8 +271,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: e200c9acdd1ccda408ee81d2defdfe34,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   humanoidOversampling: 1
   additionalBone: 0

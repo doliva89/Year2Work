@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 8eef6e9189c3b1c479238c0b6f600fbc
-timeCreated: 1501821172
+guid: c5d6b8fdc6f68a742b055d7e0a385604
+timeCreated: 1502341529
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -54,7 +54,7 @@ ModelImporter:
     400044: Geo
     400046: //RootNode
     4300000: Geo
-    7400000: walk_Anim
+    7400000: rollAttack_Anim
     9500000: //RootNode
     13700000: Geo
   materials:
@@ -79,17 +79,17 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: walk_Anim
+      name: rollAttack_Anim
       takeName: Take 001
-      firstFrame: 1
-      lastFrame: 96
+      firstFrame: 56
+      lastFrame: 130
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -177,7 +177,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
   importAnimation: 1
-  copyAvatar: 1
+  copyAvatar: 0
   humanDescription:
     serializedVersion: 2
     human: []
@@ -194,8 +194,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: e200c9acdd1ccda408ee81d2defdfe34,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
   humanoidOversampling: 1
   additionalBone: 0

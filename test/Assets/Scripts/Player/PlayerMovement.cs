@@ -16,16 +16,19 @@ public class PlayerMovement : MonoBehaviour {
     
 
     Vector3 directionOfRoll;
+    private Animator animator;
     private Vector3 mousePosition;
     private Vector3 direction;
     private float distanceFromObject;
     private float movementSpeed;
     private bool m_grounded;
+    bool running;
 
 
     //public Camera camera;
 
     void Start () {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         m_grounded = true;
 
@@ -51,7 +54,7 @@ public class PlayerMovement : MonoBehaviour {
         else { movementSpeed = walkSpeed; }
        
         string direction = "none";
-
+        if (v == 0 && x == 0) direction = "none";
         if (v > 0.1) direction = "forward";
         if (v < -0.1) direction = "backward";
         if (x > 0.1) direction = "right";
@@ -64,44 +67,56 @@ public class PlayerMovement : MonoBehaviour {
             case "forward":
                 rb.MovePosition(transform.position + transform.forward * movementSpeed * Time.deltaTime);
                 directionOfRoll = transform.forward;
+                animator.SetBool("Running", true);
                 break;
 
             case "backward":
                 rb.MovePosition(transform.position - transform.forward * movementSpeed * Time.deltaTime);
                 directionOfRoll = -transform.forward;
+                animator.SetBool("Running", true);
                 break;
 
             case "right":
                 rb.MovePosition(transform.position + transform.right * movementSpeed * Time.deltaTime);
                 directionOfRoll = transform.right;
+                animator.SetBool("Running", true);
                 break;
 
             case "left":
                 rb.MovePosition(transform.position - transform.right * movementSpeed * Time.deltaTime);
                 directionOfRoll = -transform.right;
+                animator.SetBool("Running", true);
                 break;
 
             case "ForwardLeft":
                 rb.MovePosition(transform.position - (transform.right - transform.forward).normalized * movementSpeed * Time.deltaTime);
                 directionOfRoll = -(transform.right - transform.forward).normalized;
+                animator.SetBool("Running", true);
                 break;
 
             case "ForwardRight":
                 rb.MovePosition(transform.position + (transform.right + transform.forward).normalized * movementSpeed * Time.deltaTime);
                 directionOfRoll = (transform.right + transform.forward).normalized;
+                animator.SetBool("Running", true);
                 break;
 
             case "BackwardLeft":
                 rb.MovePosition(transform.position - (transform.right + transform.forward).normalized * movementSpeed * Time.deltaTime);
                 directionOfRoll = -(transform.right + transform.forward).normalized;
+                animator.SetBool("Running", true);
                 break;
 
             case "BackwardRight":
                 rb.MovePosition(transform.position + (transform.right - transform.forward).normalized * movementSpeed * Time.deltaTime);
                 directionOfRoll = (transform.right - transform.forward).normalized;
-                break; 
+                animator.SetBool("Running", true);
+                break;
+
+            case "none":
+                animator.SetBool("Running", false);
+                break;
         }
-       
+        
     }
 
     void  Turning() {

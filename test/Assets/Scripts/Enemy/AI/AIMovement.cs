@@ -51,7 +51,7 @@ public class AIMovement : MonoBehaviour {
         {
           //  print("wandering");
             animator.SetBool("chasing", false);
-            animator.SetBool("roll", false);
+            animator.SetBool("isRolling", false);
             InvokeRepeating("Wander", wanderRepeatTime, wanderRepeatRate);
         }
         if(playerDistance <= inRangeChase && playerDistance >= inRangeRoll && !IsInvoking("RollAttack"))
@@ -59,7 +59,7 @@ public class AIMovement : MonoBehaviour {
           //  print("chasing range");
 
             animator.SetBool("chasing", true);
-            animator.SetBool("roll", false);
+            animator.SetBool("isRolling", false);
             ChasePlayer();
         }
 
@@ -67,7 +67,7 @@ public class AIMovement : MonoBehaviour {
         {
            // print("roll range");
             agent.speed = rollSpeed;
-            animator.SetBool("roll", true);
+            animator.SetBool("isRolling", true);
             animator.SetBool("chasing", false);
             Invoke("RollAttack", 5.0f);
         }

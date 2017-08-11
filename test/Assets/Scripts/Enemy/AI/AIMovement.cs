@@ -49,17 +49,19 @@ public class AIMovement : MonoBehaviour {
 
         if (playerDistance >= outRangeWander && !IsInvoking("Wander") && !IsInvoking("RollAttack"))
         {
-          //  print("wandering");
+            //  print("wandering");
             //animator.SetBool("chasing", false);
             animator.SetBool("isRolling", false);
             InvokeRepeating("Wander", wanderRepeatTime, wanderRepeatRate);
         }
         if(playerDistance <= inRangeChase && playerDistance >= inRangeRoll && !IsInvoking("RollAttack"))
         {
-          //  print("chasing range");
+            //  print("chasing range");
 
             //animator.SetBool("chasing", true);
-            //animator.SetBool("isRolling", false);
+            animator.SetBool("isRolling", false);
+
+
             ChasePlayer();
         }
 
@@ -68,6 +70,7 @@ public class AIMovement : MonoBehaviour {
             animator.SetBool("isRolling", true);
             Invoke("RollAttack", playerDistance/4);
             print(playerDistance / 4);
+            StartCoroutine(Wait(4));
         }
     }
 
@@ -96,27 +99,15 @@ public class AIMovement : MonoBehaviour {
     void RollAttack()
     {
         NewDestination(player.transform.position);
-        animator.SetBool("isRolling", false);
-        StartCoroutine(Wait(4));
-    }
-
-    bool PlayerMiss()
-    {
-        if (player.transform.position == this.transform.position)
-        { return true; }
-        else { return false; }
     }
 
     IEnumerator Wait(float waitTime)
     {
         print("time " + Time.time);
-        NewDestination(this.transform.position);
-        
-        print("set rolling false");
         yield return new WaitForSeconds(waitTime);
-        print("time " + Time.time);
         animator.SetBool("isRolling", false);
-
+        print("stop rolling");
+        print("time " + Time.time);
     }
 
 

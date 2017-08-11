@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour {
     public float jumpForce;
     public float negativeJumpForce;
     public float rollForce;
+    float _doubleTapTimeD;
     public int rolldistance;
     
 
@@ -38,6 +39,7 @@ public class PlayerMovement : MonoBehaviour {
 	void FixedUpdate () {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
+        checkForDoubleTap();
         Movement(h, v);
         Turning();
         Jump();
@@ -117,6 +119,25 @@ public class PlayerMovement : MonoBehaviour {
                 break;
         }
         
+    }
+
+    void checkForDoubleTap() {
+        bool doubleTapD = false;
+
+        #region doubleTapD
+
+        if (Input.GetKeyDown(KeyCode.D)) {
+            if (Time.time < _doubleTapTimeD + .3f) {
+                doubleTapD = true;
+            }
+            _doubleTapTimeD = Time.time;
+        }
+
+        #endregion
+
+        if (doubleTapD) {
+            Debug.Log("DoubleTapD");
+        }
     }
 
     void  Turning() {

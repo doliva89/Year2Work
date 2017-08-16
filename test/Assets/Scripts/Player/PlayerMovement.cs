@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     Rigidbody rb;
-
+    public Transform map;
     public float walkSpeed;
     public float runSpeed;
     public float jumpForce;
@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour {
         Turning();
         Jump();
         Dodge(h, v);
-
+        checkForSlopes();
     }
 
     void Movement(float x, float v) {
@@ -69,53 +69,53 @@ public class PlayerMovement : MonoBehaviour {
             case "forward":
                 rb.MovePosition(transform.position + transform.forward * movementSpeed * Time.deltaTime);
                 directionOfRoll = transform.forward;
-                animator.SetBool("Running", true);
+               // animator.SetBool("Running", true);
                 break;
 
             case "backward":
                 rb.MovePosition(transform.position - transform.forward * movementSpeed * Time.deltaTime);
                 directionOfRoll = -transform.forward;
-                animator.SetBool("Running", true);
+              //  animator.SetBool("Running", true);
                 break;
 
             case "right":
                 rb.MovePosition(transform.position + transform.right * movementSpeed * Time.deltaTime);
                 directionOfRoll = transform.right;
-                animator.SetBool("Running", true);
+                //animator.SetBool("Running", true);
                 break;
 
             case "left":
                 rb.MovePosition(transform.position - transform.right * movementSpeed * Time.deltaTime);
                 directionOfRoll = -transform.right;
-                animator.SetBool("Running", true);
+               // animator.SetBool("Running", true);
                 break;
 
             case "ForwardLeft":
                 rb.MovePosition(transform.position - (transform.right - transform.forward).normalized * movementSpeed * Time.deltaTime);
                 directionOfRoll = -(transform.right - transform.forward).normalized;
-                animator.SetBool("Running", true);
+              //  animator.SetBool("Running", true);
                 break;
 
             case "ForwardRight":
                 rb.MovePosition(transform.position + (transform.right + transform.forward).normalized * movementSpeed * Time.deltaTime);
                 directionOfRoll = (transform.right + transform.forward).normalized;
-                animator.SetBool("Running", true);
+               // animator.SetBool("Running", true);
                 break;
 
             case "BackwardLeft":
                 rb.MovePosition(transform.position - (transform.right + transform.forward).normalized * movementSpeed * Time.deltaTime);
                 directionOfRoll = -(transform.right + transform.forward).normalized;
-                animator.SetBool("Running", true);
+///animator.SetBool("Running", true);
                 break;
 
             case "BackwardRight":
                 rb.MovePosition(transform.position + (transform.right - transform.forward).normalized * movementSpeed * Time.deltaTime);
                 directionOfRoll = (transform.right - transform.forward).normalized;
-                animator.SetBool("Running", true);
+             //   animator.SetBool("Running", true);
                 break;
 
             case "none":
-                animator.SetBool("Running", false);
+             //   animator.SetBool("Running", false);
                 break;
         }
         
@@ -171,6 +171,25 @@ public class PlayerMovement : MonoBehaviour {
         if(collision.gameObject.tag == "Map") {
             m_grounded = true;
         }
+    }
+
+    void checkForSlopes() {
+        RaycastHit hit;
+        RaycastHit hit2;
+        Vector3 down = transform.TransformDirection(Vector3.down);
+        Vector3 fwd = transform.TransformDirection(Vector3.forward);
+
+        if (Physics.Raycast(transform.position, down, out hit)) {
+           // print("Found an object - distance: " + hit.distance);
+            if (Physics.Raycast(transform.position, fwd, out hit2)) {
+                print("Found an object forward - distance: " + hit2.distance);
+                // print("There is something in front of the object!");
+                // print(Vector3.Angle(down, fwd));
+                // print(Physics.Raycast(transform.position, down, 5));
+            }
+
+        }
+
     }
 
 }

@@ -4,27 +4,29 @@ using UnityEngine;
 
 public class CameraLook : MonoBehaviour {
 
-    Quaternion startPos;
-    Quaternion newPos;
+  
     public Transform cube;
     float t;
 	// Use this for initialization
 	void Start () {
-        startPos.x = transform.rotation.eulerAngles.x;
+      
        
        
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        //float mouseInput = Input.GetAxis("Mouse X");
+        //Vector3 lookhere = new Vector3(0, mouseInput, 0);
+        //transform.Rotate(lookhere);
+
         if (Input.GetKey(KeyCode.Mouse1)) {
             
             float mouseInputy = Input.GetAxis("Mouse Y");
             Vector3 lookUpDown = new Vector3(mouseInputy, 0, 0);
             transform.Rotate(lookUpDown);
 
-            newPos.x = transform.rotation.x;
-            newPos.w = transform.rotation.w;
+          
         }
         else {
 

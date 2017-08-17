@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     Rigidbody rb;
-    public Transform map;
+
     public float walkSpeed;
     public float runSpeed;
     public float jumpForce;
@@ -14,47 +14,49 @@ public class PlayerMovement : MonoBehaviour {
     public float rollForce;
     float _doubleTapTimeD;
     public int rolldistance;
-    
+
 
     Vector3 directionOfRoll;
     private Animator animator;
-    private Vector3 mousePosition;
-    private Vector3 direction;
-    private float distanceFromObject;
     private float movementSpeed;
     private bool m_grounded;
-    bool running;
+     public bool grounded;
+    bool doubleTapD = false;
+    bool movement = true;
+    
 
-
-    //public Camera camera;
-
-    void Start () {
+    void Start() {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         m_grounded = true;
 
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame
+    void FixedUpdate() {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
+
         checkForDoubleTap();
-        Movement(h, v);
+        Dodge(h, v);
+        if (movement) {
+            Movement(h, v);
+        }
         Turning();
         Jump();
-        Dodge(h, v);
+        
         checkForSlopes();
+        
     }
 
     void Movement(float x, float v) {
 
-       if( Input.GetKey(KeyCode.LeftShift)) {
+        if (Input.GetKey(KeyCode.LeftShift)) {
 
             movementSpeed = runSpeed;
         }
         else { movementSpeed = walkSpeed; }
-       
+
         string direction = "none";
         if (v == 0 && x == 0) direction = "none";
         if (v > 0.1) direction = "forward";
@@ -68,14 +70,12 @@ public class PlayerMovement : MonoBehaviour {
         switch (direction) {
             case "forward":
                 rb.MovePosition(transform.position + transform.forward * movementSpeed * Time.deltaTime);
-                directionOfRoll = transform.forward;
-               // animator.SetBool("Running", true);
+                // animator.SetBool("Running", true);
                 break;
 
             case "backward":
-                rb.MovePosition(transform.position - transform.forward * movementSpeed * Time.deltaTime);
-                directionOfRoll = -transform.forward;
-              //  animator.SetBool("Running", true);
+                rb.MovePosition(transform.position - transform.forward * movementSpeed * Time.deltaTime);;
+                //  animator.SetBool("Running", true);
                 break;
 
             case "right":
@@ -87,60 +87,62 @@ public class PlayerMovement : MonoBehaviour {
             case "left":
                 rb.MovePosition(transform.position - transform.right * movementSpeed * Time.deltaTime);
                 directionOfRoll = -transform.right;
-               // animator.SetBool("Running", true);
+                // animator.SetBool("Running", true);
                 break;
 
             case "ForwardLeft":
                 rb.MovePosition(transform.position - (transform.right - transform.forward).normalized * movementSpeed * Time.deltaTime);
-                directionOfRoll = -(transform.right - transform.forward).normalized;
-              //  animator.SetBool("Running", true);
+                //  animator.SetBool("Running", true);
                 break;
 
             case "ForwardRight":
                 rb.MovePosition(transform.position + (transform.right + transform.forward).normalized * movementSpeed * Time.deltaTime);
-                directionOfRoll = (transform.right + transform.forward).normalized;
-               // animator.SetBool("Running", true);
+                // animator.SetBool("Running", true);
                 break;
 
             case "BackwardLeft":
                 rb.MovePosition(transform.position - (transform.right + transform.forward).normalized * movementSpeed * Time.deltaTime);
-                directionOfRoll = -(transform.right + transform.forward).normalized;
-///animator.SetBool("Running", true);
+                ///animator.SetBool("Running", true);
                 break;
 
             case "BackwardRight":
                 rb.MovePosition(transform.position + (transform.right - transform.forward).normalized * movementSpeed * Time.deltaTime);
-                directionOfRoll = (transform.right - transform.forward).normalized;
-             //   animator.SetBool("Running", true);
+                //   animator.SetBool("Running", true);
                 break;
 
             case "none":
-             //   animator.SetBool("Running", false);
+                //   animator.SetBool("Running", false);
                 break;
         }
-        
+
     }
 
     void checkForDoubleTap() {
-        bool doubleTapD = false;
 
-        #region doubleTapD
-
-        if (Input.GetKeyDown(KeyCode.D)) {
+         //doubleTapD = false;
+        if (Input.GetKeyDown(KeyCode.A)|| Input.GetKeyDown(KeyCode.D)) {
             if (Time.time < _doubleTapTimeD + .3f) {
                 doubleTapD = true;
+                movement = false;
+                
             }
             _doubleTapTimeD = Time.time;
+           
         }
-
-        #endregion
-
         if (doubleTapD) {
-            Debug.Log("DoubleTapD");
+            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) {
+                print("space key was released");
+                doubleTapD = false;
+
+                movement = true;
+                print(movement);
+            }
+            
         }
+      
     }
 
-    void  Turning() {
+    void Turning() {
         float mouseInput = Input.GetAxis("Mouse X");
         Vector3 lookhere = new Vector3(0, mouseInput, 0);
         transform.Rotate(lookhere);
@@ -157,40 +159,41 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     void Dodge(float h, float v) {
-
-       
-        if (h !=0 && Input.GetKeyDown(KeyCode.E) || v != 0 && Input.GetKeyDown(KeyCode.E)){
-            print(Input.GetKeyDown(KeyCode.E));
-            rb.AddForce(directionOfRoll * rollForce, ForceMode.Impulse - rolldistance);
+        
+        if (h != 0 && Input.GetKeyDown(KeyCode.A) || h != 0 && Input.GetKeyDown(KeyCode.D)) {
+            if (doubleTapD) {
+                rb.AddForce(directionOfRoll * rollForce, ForceMode.Impulse - rolldistance);
+            }
         }
     }
 
-    
+
 
     private void OnCollisionEnter(Collision collision) {
-        if(collision.gameObject.tag == "Map") {
+        if (collision.gameObject.tag == "Map") {
             m_grounded = true;
         }
     }
 
     void checkForSlopes() {
+
         RaycastHit hit;
-        RaycastHit hit2;
         Vector3 down = transform.TransformDirection(Vector3.down);
-        Vector3 fwd = transform.TransformDirection(Vector3.forward);
 
         if (Physics.Raycast(transform.position, down, out hit)) {
-           // print("Found an object - distance: " + hit.distance);
-            if (Physics.Raycast(transform.position, fwd, out hit2)) {
-                print("Found an object forward - distance: " + hit2.distance);
-                // print("There is something in front of the object!");
-                // print(Vector3.Angle(down, fwd));
-                // print(Physics.Raycast(transform.position, down, 5));
-            }
 
-        }
+            Quaternion targetRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
+            Vector3 incomingVec = hit.point - transform.position;
+            Vector3 reflectVec = Vector3.Reflect(incomingVec, hit.normal);
+            Debug.DrawLine(transform.position, hit.point, Color.red);
+            Debug.DrawRay(hit.point, reflectVec, Color.green);
+        
 
     }
+      
 
+
+    }
 }
 

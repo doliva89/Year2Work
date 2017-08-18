@@ -12,20 +12,27 @@ public class PlayerMovement : MonoBehaviour {
     public float jumpForce;
     public float negativeJumpForce;
     public float rollForce;
-    float _doubleTapTimeD;
+    public float tapTime;
+    public float gloabForce;
+    
     public int rolldistance;
 
-
+    Vector3 globalForce;
     Vector3 directionOfRoll;
     private Animator animator;
+
     private float movementSpeed;
+    private float _doubleTapTimeD;
+    private float worldForwardAngle;
+    private float worldRightAngle;
+
     private bool m_grounded;
-     public bool grounded;
-    bool doubleTapD = false;
-    bool movement = true;
+    private bool doubleTapD = false;
+    private bool movement = true;
     
 
     void Start() {
+        globalForce = Vector3.zero;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         m_grounded = true;
@@ -34,19 +41,23 @@ public class PlayerMovement : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate() {
+
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
         checkForDoubleTap();
         Dodge(h, v);
+
         if (movement) {
             Movement(h, v);
         }
+
         Turning();
         Jump();
-        
         checkForSlopes();
-        
+        calculatingAngles();
+
+
     }
 
     void Movement(float x, float v) {
@@ -121,7 +132,7 @@ public class PlayerMovement : MonoBehaviour {
 
          //doubleTapD = false;
         if (Input.GetKeyDown(KeyCode.A)|| Input.GetKeyDown(KeyCode.D)) {
-            if (Time.time < _doubleTapTimeD + .3f) {
+            if (Time.time < _doubleTapTimeD + tapTime) {
                 doubleTapD = true;
                 movement = false;
                 
@@ -131,9 +142,7 @@ public class PlayerMovement : MonoBehaviour {
         }
         if (doubleTapD) {
             if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) {
-                print("space key was released");
                 doubleTapD = false;
-
                 movement = true;
                 print(movement);
             }
@@ -180,20 +189,46 @@ public class PlayerMovement : MonoBehaviour {
         RaycastHit hit;
         Vector3 down = transform.TransformDirection(Vector3.down);
 
-        if (Physics.Raycast(transform.position, down, out hit)) {
+        if (Physics.Raycast(transform.position, down, out hit,5)) {
 
             Quaternion targetRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
-            Vector3 incomingVec = hit.point - transform.position;
-            Vector3 reflectVec = Vector3.Reflect(incomingVec, hit.normal);
-            Debug.DrawLine(transform.position, hit.point, Color.red);
-            Debug.DrawRay(hit.point, reflectVec, Color.green);
+
+           // float dot = Vector3.Dot(Vector3.forward, transform.up);
+        }
+    }
+
+    void calculatingAngles() {
+
+        float forwardAngle = Vector3.Angle(transform.up, Vector3.forward);
+        worldForwardAngle = forwardAngle - 90;
+        //print("f =" + worldForwardAngle);
+
+        float Rightangle = Vector3.Angle(transform.up, Vector3.right);
+        worldRightAngle = Rightangle - 90;
+        //print("R="+ worldRightAngle);
+
+        if (worldForwardAngle > 10)
+            globalForce.z = -(worldForwardAngle - 10) ;
+
+        else if (worldForwardAngle < -10)
+            globalForce.z = Mathf.Abs((worldForwardAngle + 10));
+        else globalForce.z = 0;
+
+        if (worldRightAngle > 10)
+            globalForce.x = -(worldRightAngle - 10) ;
+        else if (worldRightAngle < -10)
+            globalForce.x = Mathf.Abs((worldRightAngle + 10));
+        else
+            globalForce.x = 0;
+
         
 
-    }
-      
+      rb.AddForce(globalForce , ForceMode.Force);
+        print(worldRightAngle);
+        print(worldForwardAngle);
+        print(globalForce);
 
-
-    }
-}
+    }  
+} 
 

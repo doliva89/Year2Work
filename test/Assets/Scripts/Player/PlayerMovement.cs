@@ -13,7 +13,8 @@ public class PlayerMovement : MonoBehaviour {
     public float negativeJumpForce;
     public float rollForce;
     public float tapTime;
-    public float gloabForce;
+    public float slideStartAngel;
+    public float slideMultiplyer;
     
     public int rolldistance;
 
@@ -144,7 +145,7 @@ public class PlayerMovement : MonoBehaviour {
             if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) {
                 doubleTapD = false;
                 movement = true;
-                print(movement);
+              //  print(movement);
             }
             
         }
@@ -193,8 +194,6 @@ public class PlayerMovement : MonoBehaviour {
 
             Quaternion targetRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
-
-           // float dot = Vector3.Dot(Vector3.forward, transform.up);
         }
     }
 
@@ -202,33 +201,30 @@ public class PlayerMovement : MonoBehaviour {
 
         float forwardAngle = Vector3.Angle(transform.up, Vector3.forward);
         worldForwardAngle = forwardAngle - 90;
-        //print("f =" + worldForwardAngle);
+       
 
         float Rightangle = Vector3.Angle(transform.up, Vector3.right);
         worldRightAngle = Rightangle - 90;
-        //print("R="+ worldRightAngle);
+       
 
-        if (worldForwardAngle > 10)
-            globalForce.z = -(worldForwardAngle - 10) ;
+        if (worldForwardAngle > slideStartAngel)
+            globalForce.z = -(worldForwardAngle - slideStartAngel) * slideMultiplyer;
 
-        else if (worldForwardAngle < -10)
-            globalForce.z = Mathf.Abs((worldForwardAngle + 10));
+        else if (worldForwardAngle < -slideStartAngel)
+            globalForce.z = Mathf.Abs((worldForwardAngle + slideStartAngel)* slideMultiplyer);
+
         else globalForce.z = 0;
 
-        if (worldRightAngle > 10)
-            globalForce.x = -(worldRightAngle - 10) ;
-        else if (worldRightAngle < -10)
-            globalForce.x = Mathf.Abs((worldRightAngle + 10));
+        if (worldRightAngle > slideStartAngel)
+            globalForce.x = -(worldRightAngle - slideStartAngel)* slideMultiplyer;
+        else if (worldRightAngle < -slideStartAngel)
+            globalForce.x = Mathf.Abs((worldRightAngle + slideStartAngel)* slideMultiplyer);
         else
             globalForce.x = 0;
 
         
 
       rb.AddForce(globalForce , ForceMode.Force);
-        print(worldRightAngle);
-        print(worldForwardAngle);
-        print(globalForce);
-
     }  
 } 
 

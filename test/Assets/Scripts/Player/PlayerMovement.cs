@@ -23,11 +23,13 @@ public class PlayerMovement : MonoBehaviour {
     private Animator animator;
 
     private float movementSpeed;
+    private float _doubleTapTimeA;
     private float _doubleTapTimeD;
     private float worldForwardAngle;
     private float worldRightAngle;
 
     private bool m_grounded;
+    private bool doubleTapA = false;
     private bool doubleTapD = false;
     private bool movement = true;
     
@@ -46,18 +48,21 @@ public class PlayerMovement : MonoBehaviour {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        checkForDoubleTap();
-        Dodge(h, v);
-
-        if (movement) {
+        checkForDoubleTap(h,v);
+        
+           // Dodge(h, v);
             Movement(h, v);
-        }
+        
+
+      //  if (movement) {
+           
+       // }
 
         Turning();
         Jump();
         checkForSlopes();
         calculatingAngles();
-
+        print(rb.velocity.magnitude);
 
     }
 
@@ -129,27 +134,30 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
-    void checkForDoubleTap() {
+    void checkForDoubleTap(float h, float v) {
 
          //doubleTapD = false;
-        if (Input.GetKeyDown(KeyCode.A)|| Input.GetKeyDown(KeyCode.D)) {
+        if (Input.GetKeyDown(KeyCode.A)) {
+            if (Time.time < _doubleTapTimeA + tapTime) {
+                doubleTapA = true;
+                movement = false;
+                Dodge(h, v);
+            }
+            _doubleTapTimeA = Time.time;
+           
+        }
+
+        if (Input.GetKeyDown(KeyCode.D)) {
             if (Time.time < _doubleTapTimeD + tapTime) {
                 doubleTapD = true;
                 movement = false;
-                
+                Dodge(h, v);
             }
             _doubleTapTimeD = Time.time;
-           
+
         }
-        if (doubleTapD) {
-            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) {
-                doubleTapD = false;
-                movement = true;
-              //  print(movement);
-            }
-            
-        }
-      
+
+
     }
 
     void Turning() {
@@ -170,9 +178,18 @@ public class PlayerMovement : MonoBehaviour {
 
     void Dodge(float h, float v) {
         
-        if (h != 0 && Input.GetKeyDown(KeyCode.A) || h != 0 && Input.GetKeyDown(KeyCode.D)) {
-            if (doubleTapD) {
+        
+            if (doubleTapA) {
+            if (Input.GetKeyDown(KeyCode.A)) {
+                if (rb.velocity.magnitude <= 0.5f && rb.velocity.magnitude >= -0.5f)
                 rb.AddForce(directionOfRoll * rollForce, ForceMode.Impulse - rolldistance);
+            }
+        }
+
+        if (doubleTapD) {
+            if (Input.GetKeyDown(KeyCode.D)) {
+                if (rb.velocity.magnitude <= 0.5f && rb.velocity.magnitude >= -0.5f)
+                    rb.AddForce(directionOfRoll * rollForce, ForceMode.Impulse - rolldistance);
             }
         }
     }

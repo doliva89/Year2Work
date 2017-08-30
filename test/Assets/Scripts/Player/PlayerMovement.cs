@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     Rigidbody rb;
-
+    Transform temp;
     public float walkSpeed;
     public float runSpeed;
     public float jumpForce;
@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour {
     public float tapTime;
     public float slideStartAngel;
     public float slideMultiplyer;
-    
+
     public int rolldistance;
 
     Vector3 globalForce;
@@ -52,17 +52,18 @@ public class PlayerMovement : MonoBehaviour {
         
            // Dodge(h, v);
             Movement(h, v);
-        
 
-      //  if (movement) {
-           
-       // }
+
+        //  if (movement) {
+
+        // }
 
         Turning();
         Jump();
         checkForSlopes();
         calculatingAngles();
-        print(rb.velocity.magnitude);
+        
+        // print(rb.velocity.magnitude);
 
     }
 
@@ -157,13 +158,24 @@ public class PlayerMovement : MonoBehaviour {
 
         }
 
-
     }
-
+    
     void Turning() {
+
         float mouseInput = Input.GetAxis("Mouse X");
         Vector3 lookhere = new Vector3(0, mouseInput, 0);
         transform.Rotate(lookhere);
+        float dot = Vector3.Dot(transform.forward, globalForce);
+        print("global: " + globalForce);
+        print("DOT 1: "+dot);
+        dot = (1 - Mathf.Clamp01(dot + .3f));
+        print("DOT 2: " + dot);
+        transform.rotation = Quaternion.Euler(0, Mathf.LerpAngle(transform.eulerAngles.y, Quaternion.LookRotation(globalForce).eulerAngles.y, ((Time.deltaTime * 1) * dot)), 0);
+           
+           
+           
+           //Vector3.Lerp(transform.rotation.eulerAngles, globalForce, ((Time.deltaTime * 1) * dot)));
+        
     }
 
     void Jump() {

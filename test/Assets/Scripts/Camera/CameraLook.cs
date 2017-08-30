@@ -24,7 +24,7 @@ public class CameraLook : MonoBehaviour {
     void LateUpdate() {
 
         offsetY = Quaternion.AngleAxis(Input.GetAxis("Mouse Y") * turnSpeed, -Vector3.right) * offsetY;
-        print(offsetY);
+        //print(offsetY);
 
         //clamp the y and z values of camera
         offsetY.y = Mathf.Clamp(offsetY.y, 0.2f, 5.3f);

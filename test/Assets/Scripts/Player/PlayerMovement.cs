@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour {
     public float tapTime;
     public float slideStartAngel;
     public float slideMultiplyer;
-
+    public float burm;
     public int rolldistance;
 
     Vector3 globalForce;
@@ -48,6 +48,8 @@ public class PlayerMovement : MonoBehaviour {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
+        animator.SetFloat("_X", h);
+
         checkForDoubleTap(h,v);
         
            // Dodge(h, v);
@@ -58,11 +60,11 @@ public class PlayerMovement : MonoBehaviour {
 
         // }
 
-        Turning();
+      //  Turning();
         Jump();
         checkForSlopes();
         calculatingAngles();
-        
+        Landing();
         // print(rb.velocity.magnitude);
 
     }
@@ -74,6 +76,20 @@ public class PlayerMovement : MonoBehaviour {
             movementSpeed = runSpeed;
         }
         else { movementSpeed = walkSpeed; }
+
+        float xProj = animator.GetFloat("xProj");
+        Vector3 moveDir = transform.TransformDirection(xProj * burm, 0, v * movementSpeed);
+
+        rb.MovePosition(transform.position + (moveDir * Time.deltaTime));
+        rb.AddForce(moveDir*Time.deltaTime,ForceMode.VelocityChange);
+
+
+
+
+
+        /*
+
+
 
         string direction = "none";
         if (v == 0 && x == 0) direction = "none";
@@ -132,7 +148,7 @@ public class PlayerMovement : MonoBehaviour {
                 //   animator.SetBool("Running", false);
                 break;
         }
-
+        */
     }
 
     void checkForDoubleTap(float h, float v) {
@@ -165,12 +181,12 @@ public class PlayerMovement : MonoBehaviour {
         float mouseInput = Input.GetAxis("Mouse X");
         Vector3 lookhere = new Vector3(0, mouseInput, 0);
         transform.Rotate(lookhere);
-        float dot = Vector3.Dot(transform.forward, globalForce);
-        print("global: " + globalForce);
-        print("DOT 1: "+dot);
-        dot = (1 - Mathf.Clamp01(dot + .3f));
-        print("DOT 2: " + dot);
-        transform.rotation = Quaternion.Euler(0, Mathf.LerpAngle(transform.eulerAngles.y, Quaternion.LookRotation(globalForce).eulerAngles.y, ((Time.deltaTime * 1) * dot)), 0);
+        //float dot = Vector3.Dot(transform.forward, globalForce);
+        //print("global: " + globalForce);
+        //print("DOT 1: "+dot);
+        //dot = (1 - Mathf.Clamp01(dot + .3f));
+        //print("DOT 2: " + dot);
+        //transform.rotation = Quaternion.Euler(0, Mathf.LerpAngle(transform.eulerAngles.y, Quaternion.LookRotation(globalForce).eulerAngles.y, ((Time.deltaTime * 1) * dot)), 0);
            
            
            
@@ -216,12 +232,20 @@ public class PlayerMovement : MonoBehaviour {
 
     void checkForSlopes() {
 
+        float mouseInput = Input.GetAxis("Mouse X");
+        Vector3 lookhere = new Vector3(0, mouseInput, 0);
+        transform.Rotate(lookhere);
+        float dot = Vector3.Dot(transform.forward, globalForce);
+        dot = (1 - Mathf.Clamp01(dot + .1f));
+        float yVal = Mathf.LerpAngle(transform.eulerAngles.y, Quaternion.LookRotation(globalForce).eulerAngles.y,((Time.deltaTime * 15) * dot));
+
         RaycastHit hit;
         Vector3 down = transform.TransformDirection(Vector3.down);
 
         if (Physics.Raycast(transform.position, down, out hit,5)) {
 
             Quaternion targetRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+            targetRotation = Quaternion.Euler(targetRotation.eulerAngles.x, yVal, targetRotation.eulerAngles.z);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10);
         }
     }
@@ -254,6 +278,28 @@ public class PlayerMovement : MonoBehaviour {
         
 
       rb.AddForce(globalForce , ForceMode.Force);
-    }  
+    }
+
+    void Landing() {
+
+        RaycastHit hitForLanding;
+        Vector3 down = transform.TransformDirection(Vector3.down);
+
+
+        if (Physics.Raycast(transform.position, down, out hitForLanding)) {
+
+            if (hitForLanding.distance <= 2f && hitForLanding.distance >= 1.2f && Input.GetMouseButtonDown(0)) {
+               // print(hitForLanding.distance);
+              //  print("landed");
+                slideMultiplyer += .2f;
+
+            }
+
+            if (hitForLanding.distance < 1.2f && Input.GetMouseButtonDown(0) || hitForLanding.distance > 2f && Input.GetMouseButtonDown(0)) {
+             //   print("Didnt land");
+                slideMultiplyer = 1f;
+            }
+        }
+    }
 } 
 
